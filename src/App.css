@@ -1,9 +1,42 @@
+body{
+  background-color: #242424;
+  color: #fff;
+  font-size: 12px;
+}
 ul {
   display: flex;
   flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
 }
-
 li {
   list-style: none;
   margin: 10px;
+  width: 150px;
+}
+.contentBox{
+  margin: 50px;
+}
+.yourTeam{
+  background-color: #fff;
+  border: solid 1px black;
+  border-radius: 5px;
+  color: black;
+  padding: 20px;
+  margin-bottom: 50px;
+}
+.pickMembers{
+  font-size: 20px;
+  text-align: center;
+  color: red;
+}
+.buttonClear{
+  font-size: 12px;
+  background: #b5b5b5;
+  color: #fff;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+.buttonClear:hover{
+  background: #242424;
 }
