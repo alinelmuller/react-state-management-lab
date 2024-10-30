@@ -1,7 +1,8 @@
 import './App.css';
 import './index.css';
 import { useState } from "react";
-import ZombieFightersList from './components/zombieFightersList'; 
+import ZombieFightersList from './components/ZombieFightersList'; 
+import TeamMemberList from './components/TeamMemberList';
 
 const App = () => {
   const [team, setTeam] = useState([]);
@@ -15,73 +16,73 @@ const App = () => {
         price: 12,
         strength: 6,
         agility: 4,
-        img: 'https://via.placeholder.com/150/92c952',
+        img: './src/img/Zombie1.webp',
       },
       {
         name: 'Scavenger',
         price: 10,
         strength: 5,
         agility: 5,
-        img: 'https://via.placeholder.com/150/771796',
+        img: './src/img/Zombie2.webp',
       },
       {
         name: 'Shadow',
         price: 18,
         strength: 7,
         agility: 8,
-        img: 'https://via.placeholder.com/150/24f355',
+        img: './src/img/Zombie3.webp',
       },
       {
         name: 'Tracker',
         price: 14,
         strength: 7,
         agility: 6,
-        img: 'https://via.placeholder.com/150/d32776',
+        img: './src/img/Zombie4.webp',
       },
       {
         name: 'Sharpshooter',
         price: 20,
         strength: 6,
         agility: 8,
-        img: 'https://via.placeholder.com/150/1ee8a4',
+        img: './src/img/Zombie5.webp',
       },
       {
         name: 'Medic',
         price: 15,
         strength: 5,
         agility: 7,
-        img: 'https://via.placeholder.com/150/66b7d2',
+        img: './src/img/Zombie6.webp',
       },
       {
         name: 'Engineer',
         price: 16,
         strength: 6,
         agility: 5,
-        img: 'https://via.placeholder.com/150/56acb2',
+        img: './src/img/Zombie7.webp',
       },
       {
         name: 'Brawler',
         price: 11,
         strength: 8,
         agility: 3,
-        img: 'https://via.placeholder.com/150/8985dc',
+        img: './src/img/Zombie8.webp',
       },
       {
         name: 'Infiltrator',
         price: 17,
         strength: 5,
         agility: 9,
-        img: 'https://via.placeholder.com/150/392537',
+        img: './src/img/Zombie9.webp',
       },
       {
         name: 'Leader',
         price: 22,
         strength: 7,
         agility: 6,
-        img: 'https://via.placeholder.com/150/602b9e',
+        img: './src/img/Zombie10.webp',
       },
     ];
-    
+
   const calculateTotals = (updatedTeam) => {
     const strength = updatedTeam.reduce((total, fighter) => total + fighter.strength, 0);
     const agility = updatedTeam.reduce((total, fighter) => total + fighter.agility, 0);
@@ -95,7 +96,7 @@ const App = () => {
         const updatedTeam = [...team, fighter];
         setTeam(updatedTeam);
         setMoney(money - fighter.price);
-        calculateTotals(updatedTeam); // Update totals here
+        calculateTotals(updatedTeam); 
       } else {
         alert("Fighter is already in the team");
       }
@@ -105,14 +106,17 @@ const App = () => {
   };
 
   const handleClearTeam = () => {
-    if (team.length === 0) {
-      alert("You do not have a team yet. Pick some team members!");
-    }else{
-      setTeam([]);
-      setMoney(100);
-      setTotalStrength(0);
-      setTotalAgility(0);
-    }   
+    setTeam([]);
+    setMoney(100);
+    setTotalStrength(0);
+    setTotalAgility(0);
+  };
+
+  const handleRemoveFighter = (fighter) => {
+    const updatedTeam = team.filter((member) => member.name !== fighter.name);
+    setTeam(updatedTeam);
+    setMoney(money + fighter.price);
+    calculateTotals(updatedTeam);
   };
 
   return (
@@ -128,13 +132,11 @@ const App = () => {
         ) : (
           <ul>
             {team.map((fighter) => (
-              <li key={fighter.name}>
-                <img src={fighter.img} alt={fighter.name} />
-                <h3>{fighter.name}</h3>
-                <p>Price: ${fighter.price}</p>
-                <p>Strength: {fighter.strength}</p>
-                <p>Agility: {fighter.agility}</p>
-              </li>
+              <TeamMemberList 
+                key={fighter.name} 
+                fighter={fighter} 
+                onDelete={() => handleRemoveFighter(fighter)}
+              />
             ))}
           </ul>
         )}
